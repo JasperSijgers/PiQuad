@@ -7,6 +7,7 @@
 ## Hardware
 
 ![Drone Overview Shot](https://i.ibb.co/v36qZ3k/drone-top-down.png)
+
 Below is a list of the hardware used for this project. As explained in the disclaimer, this is definitely not a list of the best hardware to use. It's just meant to document exactly what was used for the project, in order to reflect on the hardware choices later on. Feel free to order these parts, but keep in mind you may be wasting your money. If you want to design your own quadcopter, and need to pick your motors and propellors, there's a calculator to help you pick your parts [over here][Calculator].
 
 #### Total Cost: &euro; 178.60*
