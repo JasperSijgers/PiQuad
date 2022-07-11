@@ -3,7 +3,7 @@ import logging
 from dotenv import load_dotenv
 from messaging.message_bus import MessageBus
 from nodes.motor_controller import MotorController
-from nodes.command_receiver import CommandReceiver
+from nodes.remote_receiver import RemoteReceiver
 from nodes.gyroscope import Gyroscope
 from nodes.information_publisher import InfoPublisher
 
@@ -27,7 +27,7 @@ def setup():
     gyro.start()
 
     # Start up the command receiver
-    receiver = CommandReceiver(bus)
+    receiver = RemoteReceiver(bus)
     receiver.start()
 
     # Start up the information publisher

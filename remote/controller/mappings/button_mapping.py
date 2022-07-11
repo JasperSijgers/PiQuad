@@ -1,4 +1,4 @@
-from controller.mappings.base_mapping import BaseMapping
+from remote.controller.mappings.base_mapping import BaseMapping
 from exceptions.exceptions import InvalidArgumentException
 
 

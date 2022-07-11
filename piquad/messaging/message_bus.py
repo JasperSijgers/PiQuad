@@ -1,6 +1,6 @@
-from topic import Topic
-from publisher import Publisher
-from subscriber import Subscriber
+from piquad.messaging.topic import Topic
+from piquad.messaging.publisher import Publisher
+from piquad.messaging.subscriber import Subscriber
 
 
 class MessageBus:

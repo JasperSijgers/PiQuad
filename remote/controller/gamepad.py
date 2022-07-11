@@ -2,11 +2,16 @@ import hid
 
 from joy import Joy
 from button import Button
-from exceptions.exceptions import ButtonNotFoundException, JoyNotFoundException, GamepadNotFoundException, \
-    InvalidArgumentException
-from controller.mappings.xbox_series_s import XboxSeriesSMapping
-from controller.mappings.joy_mapping import JoyMapping
-from controller.mappings.button_mapping import ButtonMapping
+from exceptions.exceptions import InvalidArgumentException
+from remote.exceptions.exceptions import ButtonNotFoundException, JoyNotFoundException, GamepadNotFoundException
+from remote.controller.mappings.xbox_series_s import XboxSeriesSMapping
+from remote.controller.mappings.joy_mapping import JoyMapping
+from remote.controller.mappings.button_mapping import ButtonMapping
+
+
+def normalize(value_range, value):
+    range_min, range_max = value_range
+    return (value - range_min) / (range_max - range_min)
 
 
 class Gamepad:
@@ -59,7 +64,8 @@ class Gamepad:
 
         for k, v in self.mappings.items():
             if isinstance(v, JoyMapping):
-                self.joys[k] = ((-1 if v.inverse else 1) * report[v.index]) + v.offset
+                self.joys[k] = round(1 - normalize(v.value_range, report[v.index]), 3) if v.inverse else \
+                    round(normalize(v.value_range, report[v.index]), 3)
             elif isinstance(v, ButtonMapping):
                 self.buttons[k] = report[v.index] not in v.index_values if v.inverse else \
                     report[v.index] in v.index_values

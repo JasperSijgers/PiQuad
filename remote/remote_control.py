@@ -3,19 +3,7 @@ import logging
 import websockets
 import asyncio
 
-PIQUAD_IP = '192.168.2.104'
-# PIQUAD_IP = '127.0.0.1'
-
-KEY_MAPPING = {
-    'increase_throttle': Key.up,
-    'decrease_throttle': Key.down,
-    'turn_clockwise': Key.right,
-    'turn_counter_clockwise': Key.left,
-    'toggle_mode_hover': 'h',
-    'toggle_mode_landing': 'l',
-    'stop': 'b',
-}
-
+PIQUAD_IP = '127.0.0.1'
 
 class RemoteControl:
 

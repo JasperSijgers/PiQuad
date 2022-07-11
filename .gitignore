@@ -1,2 +1,5 @@
 .idea/*
 venv/*
+**/.DS_STORE
+**/__pycache__/*
+piquad/bin/*

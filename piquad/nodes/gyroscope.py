@@ -1,5 +1,5 @@
 from threading import Thread
-from sensors.mpu_6050 import Mpu6050
+from piquad.sensors.mpu_6050 import Mpu6050
 from numpy import array
 
 
