@@ -1,8 +1,7 @@
-from threading import Thread
-import smbus
 import math
 
-# Power management registers
+import smbus
+
 power_mgmt_1 = 0x6b
 power_mgmt_2 = 0x6c
 
@@ -40,10 +39,9 @@ def get_x_rotation(accel_scaled):
     return math.degrees(radians)
 
 
-sm_bus = smbus.SMBus(1)  # or bus = smbus.SMBus(1) for Revision 2 boards
-address = 0x68  # This is the address value read via the i2cdetect command
+sm_bus = smbus.SMBus(1)
+address = 0x68
 
-# Now wake the 6050 up as it starts in sleep mode
 sm_bus.write_byte_data(address, power_mgmt_1, 0)
 
 

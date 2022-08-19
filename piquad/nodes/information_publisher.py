@@ -1,5 +1,6 @@
-from threading import Thread
 import asyncio
+from threading import Thread
+
 import websockets
 
 

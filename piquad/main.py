@@ -1,11 +1,14 @@
-import os
 import logging
+import os
+
+import pigpio
 from dotenv import load_dotenv
+
 from messaging.message_bus import MessageBus
-from nodes.motor_controller import MotorController
-from nodes.remote_receiver import RemoteReceiver
 from nodes.gyroscope import Gyroscope
 from nodes.information_publisher import InfoPublisher
+from nodes.motor_controller import MotorController
+from nodes.remote_receiver import RemoteReceiver
 
 
 def setup():
@@ -20,7 +23,7 @@ def setup():
     bus = MessageBus()
 
     # Start up the motor controller
-    MotorController(bus)
+    MotorController(pigpio.pi(), bus)
 
     # Start up the Gyroscope & Accelerometer
     gyro = Gyroscope(bus)

@@ -1,7 +1,8 @@
-import websockets
 import asyncio
 import logging
 from threading import Thread
+
+import websockets
 
 
 class RemoteReceiver(Thread):
@@ -27,9 +28,8 @@ class RemoteReceiver(Thread):
 
                 split_msg = message.split(':')
 
-                if split_msg[0] in ['throttle', 'yaw', 'pitch', 'roll']:
+                if split_msg[0] in ['throttle']:
                     self.mc_publisher.send_message(message)
 
-                # TODO: Handle a button press
             except websockets.ConnectionClosed:
                 break

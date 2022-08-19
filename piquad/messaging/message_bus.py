@@ -1,6 +1,7 @@
-from piquad.messaging.topic import Topic
-from piquad.messaging.publisher import Publisher
-from piquad.messaging.subscriber import Subscriber
+from exceptions import TopicParametersMismatchException
+from .publisher import Publisher
+from .subscriber import Subscriber
+from .topic import Topic
 
 
 class MessageBus:
@@ -17,6 +18,15 @@ class MessageBus:
         self.ensure_topic(msg_type, name, queue_size)
         return self.topics[name]
 
+    def topic_exists(self, name):
+        return name in self.topics
+
+    def topic_matches(self, msg_type, name, queue_size):
+        if not self.topic_exists(name):
+            return False
+
+        return self.topics[name].msg_type == msg_type and self.topics[name].queue_size == queue_size
+
     def get_topic_if_exists(self, name):
         if name in self.topics:
             return self.topics[name]
@@ -24,6 +34,9 @@ class MessageBus:
         return None
 
     def create_publisher(self, msg_type, name, queue_size=10):
+        if self.topic_exists(name) and not self.topic_matches(msg_type, name, queue_size):
+            raise TopicParametersMismatchException("Topic already exists, but its parameters don't match the provided.")
+
         topic = self.get_ensure_topic(msg_type, name, queue_size)
         return Publisher(topic)
 

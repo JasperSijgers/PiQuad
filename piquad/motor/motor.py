@@ -1,5 +1,8 @@
-from traitlets import HasTraits, Int, observe, validate
 import logging
+
+from traitlets import HasTraits, Int, observe, validate
+
+from exceptions import InvalidArgumentException
 
 
 class Motor(HasTraits):
@@ -7,6 +10,9 @@ class Motor(HasTraits):
 
     def __init__(self, pi, gpio, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        if gpio < 0 or gpio > 31:
+            raise InvalidArgumentException("GPIO out of range [0 ... 31]")
 
         self.pi = pi
         self.gpio = gpio

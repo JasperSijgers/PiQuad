@@ -1,6 +1,6 @@
 from threading import Thread
-from piquad.sensors.mpu_6050 import Mpu6050
-from numpy import array
+
+from sensors.mpu_6050 import Mpu6050
 
 
 def mult_arr(a, mult):
