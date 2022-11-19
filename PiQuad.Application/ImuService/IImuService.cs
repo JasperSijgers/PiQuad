@@ -6,4 +6,5 @@ public interface IImuService
 {
     void AddEventHandler(EventHandler<ImuReading> handler);
     Task Start();
+    void Stop();
 }

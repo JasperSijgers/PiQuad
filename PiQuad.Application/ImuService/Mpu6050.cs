@@ -1,6 +1,7 @@
 using System.Device.Gpio;
 using System.Device.I2c;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using PiQuad.Application.ImuService.Settings;
 using PiQuad.Application.ImuService.Types;
 
@@ -28,9 +29,9 @@ public class Mpu6050 : IImu, IDisposable
     private GpioController? _ioController;
     public event EventHandler<ImuReading>? SensorDataRetrievedEvent;
 
-    public Mpu6050(ImuSettings settings, ILogger<Mpu6050> logger)
+    public Mpu6050(IOptions<ImuSettings> settings, ILogger<Mpu6050> logger)
     {
-        _settings = settings;
+        _settings = settings.Value;
         _logger = logger;
     }
 
@@ -64,6 +65,7 @@ public class Mpu6050 : IImu, IDisposable
 
             _ioController.RegisterCallbackForPinValueChangedEvent(_settings.InterruptPin,
                 PinEventTypes.Rising | PinEventTypes.Falling, Interrupt);
+            _logger.LogInformation("Mpu6050 Initialized!");
         }
         catch (Exception e)
         {
@@ -161,8 +163,14 @@ public class Mpu6050 : IImu, IDisposable
 
         foreach (var mpuSensorValue in readings)
         {
+            _logger.LogInformation("Got reading from Mpu6050!");
             SensorDataRetrievedEvent(this, mpuSensorValue);
         }
+    }
+
+    public void Stop()
+    {
+        Dispose();
     }
 
     public void Dispose()

@@ -1,19 +1,20 @@
 using System.Net;
 using System.Net.Sockets;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using PiQuad.Application.GpioDaemonService.Settings;
 
 namespace PiQuad.Application.GpioDaemonService;
 
 public class GpioDaemonService : IGpioDaemonService, IDisposable
 {
-    private GpioDaemonServiceSettings _settings;
-    private ILogger<GpioDaemonService> _logger;
+    private readonly GpioDaemonServiceSettings _settings;
+    private readonly ILogger<GpioDaemonService> _logger;
     private Socket? _client;
 
-    public GpioDaemonService(GpioDaemonServiceSettings settings, ILogger<GpioDaemonService> logger)
+    public GpioDaemonService(IOptions<GpioDaemonServiceSettings> settings, ILogger<GpioDaemonService> logger)
     {
-        _settings = settings;
+        _settings = settings.Value;
         _logger = logger;
         ConnectToDaemon();
     }
@@ -25,6 +26,7 @@ public class GpioDaemonService : IGpioDaemonService, IDisposable
             var endpoint = new IPEndPoint(IPAddress.Parse(_settings.IpAddress), _settings.Port);
             _client = new Socket(endpoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             _client.Connect(endpoint);
+            _logger.LogInformation("Connected to GPIO daemon at {Ip}:{Port}", _settings.IpAddress, _settings.Port);
         }
         catch (SocketException e)
         {
@@ -37,6 +39,8 @@ public class GpioDaemonService : IGpioDaemonService, IDisposable
         try
         {
             await _client.SendAsync(message, SocketFlags.None);
+            _logger.LogInformation("Sent message to GPIO daemon: {Message}",
+                System.Text.Encoding.Default.GetString(message));
         }
         catch (SocketException e)
         {

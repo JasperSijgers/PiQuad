@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Options;
 using PiQuad.Application.GpioDaemonService;
 using PiQuad.Application.MotorControllerService.Settings;
 using PiQuad.Application.MotorControllerService.Types;
@@ -10,9 +11,9 @@ public class MotorControllerService : IMotorControllerService
     private readonly IGpioDaemonService _gpioDaemonService;
     private readonly Dictionary<MotorLocation, Motor> _motors;
 
-    public MotorControllerService(MotorControllerServiceSettings settings, IGpioDaemonService gpioDaemonService)
+    public MotorControllerService(IOptions<MotorControllerServiceSettings> settings, IGpioDaemonService gpioDaemonService)
     {
-        _settings = settings;
+        _settings = settings.Value;
         _gpioDaemonService = gpioDaemonService;
 
         _motors = new Dictionary<MotorLocation, Motor>

@@ -20,4 +20,9 @@ public class ImuService : IImuService
     {
         await _imu.Initialize();
     }
+
+    public void Stop()
+    {
+        _imu.Stop();
+    }
 }

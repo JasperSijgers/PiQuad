@@ -7,14 +7,14 @@
 ## Hardware
 ![Drone Overview Shot](https://i.ibb.co/v36qZ3k/drone-top-down.png)
 
-Below is a list of the hardware used for this project. As explained in the disclaimer, this is definitely not a list of the best hardware to use. It's just meant to document exactly what was used for the project, in order to reflect on the hardware choices later on. Feel free to order these parts, but keep in mind you may be wasting your money. If you want to design your own quadcopter, and need to pick your motors and propellors, there's a calculator to help you pick your parts [over here][Calculator].
+Below is a list of the hardware used for this project. As explained in the disclaimer, this is definitely not a list of the best hardware to use. It's just meant to document exactly what was used for the project, in order to reflect on the hardware choices later on. Feel free to order these parts, but keep in mind you may be wasting your money. If you want to design your own quadcopter, and need to pick your motors and propellers, there's a calculator to help you pick your parts [over here][Calculator].
 
 #### Total Cost: &euro; 186.03*
 | Part Name                  | Item                                                     | Cost         |
 |----------------------------|----------------------------------------------------------|--------------|
 | Frame                      | [GEPRC Mark4 FPV Drone Frame Kit 5"][Frame]              | &euro; 44.32 |
 | Motors                     | [Amax Performante 2306 V1 1750KV][Motors]                | &euro; 55.80 |
-| Propellors                 | [HQ Ethix S5 5x4x3 (5040) 3-blade][Propellors]           | &euro; 2.66  |
+| Propellers                 | [HQ Ethix S5 5x4x3 (5040) 3-blade][Propellers]           | &euro; 2.66  |
 | Electronic Speed Controller | [Racerstar Air50 3-6S 50A Speed Controller][ESC]         | &euro; 36.36 |
 | Battery                    | [Sunpadow LiPo 1400 mAh 22.2V (6S) 130C][Battery]        | &euro; 26.79 |
 | Inertial Measurement Unit  | [MPU-6050 3-Axis Gyroscope + Accelerometer][Gyro]        | &euro; 1.17  |
@@ -24,7 +24,7 @@ Below is a list of the hardware used for this project. As explained in the discl
 
 Additional components and equipment you'll need:
 - Soldering iron + solder (to solder the motor wires to the ESC and the ESC control wires to the prototyping PCB / Raspberry Pi)
-- Medium-strength threadlock (for the screws in the frame)
+- Medium-strength thread lock (for the screws in the frame)
 - Additional XT60 connector (to attach the battery to the ESC)
 - Electrical tape (optional: frame comes with zip ties)
 - Prototyping PCB and female header (optional: you can solder directly to the pi)
@@ -35,6 +35,19 @@ Additional components and equipment you'll need:
 ## Software
 
 Initially, the software for this project was going to be written using Python. After getting to a point where controlling the motors and reading data from the gyroscope was possible (although not accurate), I decided to switch to C# 10. I like Python for quick prototyping and readability for those who don't have much experience programming, but find that (my) Python code gets messy quite quickly in larger projects. It took about a day to convert the codebase over to C#, but it would've taken quite a bit longer if I'd waited to convert it until later on in the project.
+
+### Running Locally (for development purposes)
+The settings in the appsettings.json file should be set to values appropriate for running the software on the quadcopter. When running locally for development purposes, errors will be thrown because a connection to the IMU and GPIO Daemon can't be established. While the GPIO Daemon should be available over the network with the Raspberry Pi turned on, debugging with a running quadcopter isn't always desirable. Therefore, a fake IMU and GPIO Daemon have been provided. They can be enabled by overriding two settings in the appsettings.json file, by creating a local appsettings file:
+
+appsettings.local.json
+```
+{
+    "Overrides": {
+        "OverrideImuWithFake": true,
+        "OverrideGpioDaemonWithFake": true
+    }
+}
+```
 
 ### Requirements and Mentions
 
@@ -47,7 +60,7 @@ The code for communicating with the Mpu6050 (the IMU used for this project) is b
 [Calculator]: <https://www.ecalc.ch/xcoptercalc.php>
 [Frame]: <https://www.aliexpress.com/item/4000243274017.html>
 [Motors]: <https://amaxshop.com/index.php?route=product%2Fproduct&path=68_69&product_id=488>
-[Propellors]: <https://www.aliexpress.com/item/1005001906904891.html>
+[Propellers]: <https://www.aliexpress.com/item/1005001906904891.html>
 [ESC]: <https://www.aliexpress.com/item/1005001774084238.html>
 [Battery]: <https://www.aliexpress.com/item/1005003135607831.html>
 [Gyro]: <https://www.aliexpress.com/item/32761922595.html>

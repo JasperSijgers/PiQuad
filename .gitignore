@@ -402,3 +402,6 @@ FodyWeavers.xsd
 
 # All .DS_STORE files
 **/.DS_STORE
+
+# Local appsettings files
+appsettings.local.json
