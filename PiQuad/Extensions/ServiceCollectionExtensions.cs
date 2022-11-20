@@ -67,8 +67,8 @@ public static class ServiceCollectionExtensions
 
     public static void ConfigurePiQuadHostedService(this IServiceCollection services)
     {
+        services.AddSingleton<PiQuadControllerService>();
         services.AddHostedService<CommunicationHostedService>();
         services.AddHostedService<ImuHostedService>();
-        services.AddSingleton<PiQuadControllerService>();
     }
 }

@@ -7,7 +7,7 @@ public class CommunicationHostedService : IHostedService
 {
     private readonly ICommunicationService _communicationService;
 
-    public CommunicationHostedService(PiQuadControllerService controller, ICommunicationService communicationService)
+    public CommunicationHostedService(ICommunicationService communicationService)
     {
         _communicationService = communicationService;
     }
