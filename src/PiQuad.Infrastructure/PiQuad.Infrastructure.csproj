@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <LangVersion>11</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\PiQuad.Application\PiQuad.Application.csproj" />
+      <ProjectReference Include="..\PiQuad.Contracts\PiQuad.Contracts.csproj" />
+    </ItemGroup>
+
+</Project>
